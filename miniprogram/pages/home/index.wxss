@@ -6,3 +6,8 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+.info {
+  padding: 10px 15px;
+  font-size: 15px;
+  color: #666666;
+}

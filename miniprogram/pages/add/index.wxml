@@ -1,0 +1,25 @@
+<!--miniprogram/pages/add/index.wxml-->
+<van-cell-group>
+  <van-field
+    value="{{ title }}"
+    placeholder="请输入标题"
+    label="标题"
+    required
+    clearable
+  />
+  <van-field
+    value="{{ message }}"
+    label="详情"
+    type="textarea"
+    required
+    placeholder="请输入详情"
+    autosize
+  />
+</van-cell-group>
+<van-cell-group>
+<van-switch-cell
+  title="标题"
+  checked="{{ checked }}"
+  bind:change="onChange"
+/>
+</van-cell-group>

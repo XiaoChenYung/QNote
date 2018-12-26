@@ -1,7 +1,8 @@
 <!--index.wxml-->
-<view class="container">
-  <van-button type="default">默认按钮</van-button>
-  <van-button type="primary">主要按钮</van-button>
-  <van-button type="warning">警告按钮</van-button>
-  <van-button type="danger">危险按钮</van-button>
-</view>
+<van-panel title="画展" desc="2018-12-25 10:09:08" status="进行中" use-footer-slot footer-class="fotter">
+  <view class='info'>这样，需要把内容放在自己的东西里面</view>
+  <view slot="footer">
+    <van-button size="small">按钮</van-button>
+    <van-button size="small" type="danger">按钮</van-button>
+  </view>
+</van-panel>
