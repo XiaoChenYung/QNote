@@ -4,6 +4,7 @@
     "pages/me/index"
   ],
   "tabBar": {
+    "selectedColor": "#f65d72",
     "list": [
       {
         "pagePath": "pages/home/index",

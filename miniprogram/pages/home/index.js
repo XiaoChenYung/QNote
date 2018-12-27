@@ -3,7 +3,11 @@ const app = getApp()
 
 Page({
   data: {
-    
+    data: [
+      {
+        "title": "新建事项"
+      }
+    ]
   },
 
   onLoad: function() {
