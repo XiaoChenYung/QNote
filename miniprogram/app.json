@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/home/index",
-    "pages/me/index"
+    "pages/me/index",
+    "pages/add/index"
   ],
   "tabBar": {
     "selectedColor": "#f65d72",
@@ -11,6 +12,12 @@
         "text": "首页",
         "iconPath": "images/home.png",
         "selectedIconPath": "images/home_sel.png"
+      },
+      {
+        "pagePath": "pages/add/index",
+        "text": "添加",
+        "iconPath": "images/add.png",
+        "selectedIconPath": "images/add_sel.png"
       },
       {
         "pagePath": "pages/me/index",
