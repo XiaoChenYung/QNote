@@ -1,1 +1,4 @@
 /* miniprogram/pages/add/index.wxss */
+.group {
+  margin-top: 10px;
+}
