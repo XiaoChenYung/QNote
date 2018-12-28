@@ -13,6 +13,4 @@
     <van-cell wx:if="{{weather.length > 0}}" title="天气 :" value="{{weather}}" />
   </van-cell-group>
 </view>
-<view>
-  <van-button type="primary">默认按钮</van-button>
-</view>
+<van-button custom-class="button" type="primary">添加便签</van-button>

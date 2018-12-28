@@ -2,6 +2,7 @@
 .group {
   margin-top: 10px;
 }
-van-button {
-  width: 750rpx;
+.button {
+  margin: 30px 50rpx 0;
+  width: 650rpx;
 }
