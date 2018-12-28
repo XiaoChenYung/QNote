@@ -7,9 +7,15 @@
 </view>
 <view class='group'>
   <van-cell-group>
-    <van-switch-cell wx:if="{{address.length == 0}}" title="添加位置" checked="{{ false }}" bind:change="onChangeAddress" />
+  <!-- onChangeAddress -->
+    <van-cell wx:if="{{address.length == 0}}" title="添加位置">
+      <van-switch active-color="#f65d72" bind:change="onChangeAddress" />
+    </van-cell>
     <van-cell wx:if="{{address.length > 0}}" title="地址 :" value="{{address}}" />
-    <van-switch-cell wx:if="{{weather.length == 0}}" title="添加天气" checked="{{ false }}" bind:change="onChangeWeather" />
+    <!-- onChangeWeather -->
+    <van-cell wx:if="{{weather.length == 0}}" title="添加天气">
+      <van-switch active-color="#f65d72" bind:change="onChangeWeather" />
+    </van-cell>
     <van-cell wx:if="{{weather.length > 0}}" title="天气 :" value="{{weather}}" />
   </van-cell-group>
 </view>
