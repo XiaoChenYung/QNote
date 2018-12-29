@@ -34,9 +34,10 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "add",
-					"pathName": "pages/add/index"
+					"pathName": "pages/add/index",
+					"query": ""
 				}
 			]
 		}

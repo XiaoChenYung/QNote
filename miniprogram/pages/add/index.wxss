@@ -2,7 +2,8 @@
 .group {
   margin-top: 10px;
 }
-.button {
+button {
   margin: 30px 50rpx 0;
   width: 650rpx;
+  background-color: #f65d72 !important;
 }

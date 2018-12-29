@@ -1,22 +1,32 @@
 <!--miniprogram/pages/add/index.wxml-->
-<view class='group'>
-  <van-cell-group>
-    <van-field value="{{ title }}" placeholder="请输入标题" label="标题" required clearable />
-    <van-field value="{{ message }}" label="详情" type="textarea" required placeholder="请输入详情(高度会自适应)" autosize />
-  </van-cell-group>
-</view>
-<view class='group'>
-  <van-cell-group>
-  <!-- onChangeAddress -->
-    <van-cell wx:if="{{address.length == 0}}" title="添加位置">
-      <van-switch active-color="#f65d72" bind:change="onChangeAddress" />
-    </van-cell>
-    <van-cell wx:if="{{address.length > 0}}" title="地址 :" value="{{address}}" />
-    <!-- onChangeWeather -->
-    <van-cell wx:if="{{weather.length == 0}}" title="添加天气">
-      <van-switch active-color="#f65d72" bind:change="onChangeWeather" />
-    </van-cell>
-    <van-cell wx:if="{{weather.length > 0}}" title="天气 :" value="{{weather}}" />
-  </van-cell-group>
-</view>
-<van-button custom-class="button" type="primary">添加便签</van-button>
+<form bindsubmit="formSubmit" report-submit="true">
+  <view class='group'>
+    <van-cell-group>
+      <van-field bind:input="onTitleChange" value="{{ title }}" placeholder="请输入标题" label="标题" required clearable />
+      <van-field bind:input="onDetailChange" value="{{ message }}" label="详情" type="textarea" required placeholder="请输入详情(高度会自适应)" autosize />
+    </van-cell-group>
+  </view>
+  <view class='group'>
+    <van-cell-group>
+      <!-- onChangeAddress -->
+      <van-cell wx:if="{{address.length == 0}}" title="添加位置">
+        <van-switch inactive-color="#f65d7233" active-color="#f65d72" bind:change="onChangeAddress" />
+      </van-cell>
+      <van-cell wx:if="{{address.length > 0}}" title="地址 :" value="{{address}}" />
+      <!-- onChangeWeather -->
+      <van-cell wx:if="{{weather.length == 0}}" title="添加天气">
+        <van-switch inactive-color="#f65d7233" active-color="#f65d72" bind:change="onChangeWeather" />
+      </van-cell>
+      <van-cell wx:if="{{weather.length > 0}}" title="天气 :" value="{{weather}}" />
+      <van-cell wx:if="{{time.length == 0}}" title="添加时间提醒">
+        <van-switch inactive-color="#f65d7233" active-color="#f65d72" bind:change="onChangeTime" />
+      </van-cell>
+      <van-cell wx:if="{{time.length > 0}}" title="提醒时间 :" value="{{time}}" />
+    </van-cell-group>
+  </view>
+  <button form-type='submit' custom-class="button" type="primary">添加便签</button>
+</form>
+<van-popup show="{{ showDate }}" position="bottom" overlay="{{ true }}" bind:close="onClose">
+  <van-datetime-picker type="datetime" bind:confirm="confirm" bind:cancel="cancel" value="{{ currentDate }}" min-date="{{ minDate }}" title="选择时间" />
+</van-popup>
+<van-toast id="van-toast" />

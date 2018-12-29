@@ -1,5 +1,8 @@
 // miniprogram/pages/add/index.js
 var amapFile = require('../../libs/amap-wx.js');
+import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
+var title = ""
+var detail = ""
 
 Page({
 
@@ -10,14 +13,21 @@ Page({
     message: "",
     title: "",
     address: "",
-    weather: ""
+    weather: "",
+    time: "",
+    minHour: 10,
+    maxHour: 20,
+    minDate: new Date().getTime(),
+    currentDate: new Date().getTime(),
+    showDate: false,
+    selDate: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   onChangeAddress: function (event) {
@@ -53,6 +63,67 @@ Page({
         console.log(info)
       }
     })
+  },
+  onChangeTime: function (event) {
+    this.setData({
+      showDate: true
+    })
+  },
+  onClose: function (event) {
+    console.log(event)
+    this.setData({
+      showDate: false
+    })
+  },
+  close: function (event) {
+    console.log(event)
+    this.setData({
+      showDate: false
+    })
+  },
+  confirm: function (e) {
+    this.setData({
+      showDate: false,
+      selDate: e.detail,
+      time: getLocalTime(e.detail)
+    })
+  },
+  cancel: function (e) {
+    this.setData({
+      showDate: false
+    })
+  },
+  onTitleChange: function (e) {
+    title = e.detail
+  },
+  onDetailChange: function (e) {
+    detail = e.detail
+  },
+  formSubmit(e) {
+    console.log(e)
+    console.log(e)
+    var that = this
+    if (title.length == 0 || detail.length == 0) {
+      Toast.fail('请输入标题和详情');
+      return
+    }
+    const db = wx.cloud.database()
+    db.collection('note').add({
+      // data 字段表示需新增的 JSON 数据
+      data: {
+        title: title,
+        detail: detail,
+        c_date: new Date(),
+        a_date: new Date(that.data.selDate),
+        address: that.data.address,
+        weather: that.data.weather,
+        open_id: e.detail.formId
+      }
+    })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(console.error)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -103,3 +174,7 @@ Page({
 
   }
 })
+
+function getLocalTime(nS) {
+  return new Date(parseInt(nS)).toLocaleString().replace(/:\d{1,2}$/, ' ');
+}
