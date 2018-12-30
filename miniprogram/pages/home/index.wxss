@@ -15,9 +15,28 @@ page {
   display: flex;
   flex-direction: row;
 }
-.footer van-button {
+.footer .last {
   margin-left: 10px;
 }
-.footer van-button:first-child {
+.footer label {
+  font-size: 11px;
+  color: #999999;
+  line-height: 30px;
+}
+.footer .first {
   margin-left: auto;
+}
+.create-content {
+  text-align: center;
+  font-size: 14px;
+}
+.create-content view {
+  margin-top: 20px;
+}
+.create-tip {
+  color: #999999;
+}
+.create {
+  color: #f65d72;
+  text-decoration:underline;
 }

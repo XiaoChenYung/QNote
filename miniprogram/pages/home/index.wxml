@@ -8,9 +8,14 @@
       <view>分享：暂无好友分享</view>
     </view>
     <view class='footer' slot="footer">
-      <van-button custom-class="button" size="small" type="primary">分享</van-button>
-      <van-button custom-class="button" size="small" type="danger">关闭</van-button>
+      <label>创建时间：{{item.showCreateTime}}</label>
+      <van-button class='first' bindtap='share' custom-class="button" size="small" type="primary">分享</van-button>
+      <van-button class='last' bindtap='cose' custom-class="button" size="small" type="danger">关闭</van-button>
     </view>
   </van-panel>
 </block>
 <van-toast id="van-toast" />
+<view class='create-content' wx:if="{{notes.length == 0}}">
+<view class='create-tip'>您还没有便签</view>
+<view bindtap='create' class='create'>点击创建</view>
+</view>

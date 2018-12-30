@@ -9,9 +9,9 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    message: "",
+  data:{
     title: "",
+    detail: "",
     address: "",
     weather: "",
     time: "",
@@ -31,17 +31,23 @@ Page({
   },
 
   onChangeAddress: function (event) {
+    Toast.loading({
+      mask: false,
+      message: '获取位置...'
+    });
     // 需要手动对 checked 状态进行更新
     var that = this
     // this.setData({ checked: event.detail });
     var myAmapFun = new amapFile.AMapWX({ key: 'ef26004f24e34015a0e3b64576c1731c' });
     myAmapFun.getRegeo({
       success: function (data) {
+        Toast.clear()
         that.setData({
           address: data[0].regeocodeData.formatted_address
         })
       },
       fail: function (info) {
+        Toast.clear()
         //失败回调
         console.log(info)
       }
@@ -49,16 +55,22 @@ Page({
   },
 
   onChangeWeather: function (event) {
+    Toast.loading({
+      mask: false,
+      message: '获取天气...'
+    });
     var that = this;
     var myAmapFun = new amapFile.AMapWX({ key: 'ef26004f24e34015a0e3b64576c1731c' });
     myAmapFun.getWeather({
       success: function (data) {
+        Toast.clear()
         console.log(data)
         that.setData({
           weather: data.weather.data + ' ' + data.winddirection.data + ' ' + data.temperature.data + '°C' + ' 湿度: ' + data.humidity.data
         })
       },
       fail: function (info) {
+        Toast.clear()
         //失败回调
         console.log(info)
       }
@@ -122,10 +134,26 @@ Page({
         a_date: new Date(that.data.selDate),
         address: that.data.address,
         weather: that.data.weather,
-        open_id: e.detail.formId
+        open_id: e.detail.formId,
+        status: 1,
+        friends: []
       }
     })
       .then(res => {
+        Toast.clear()
+        that.setData({
+          title: "",
+          detail: "",
+          address: "",
+          weather: "",
+          time: "",
+          minHour: 10,
+          maxHour: 20,
+          minDate: new Date().getTime(),
+          currentDate: new Date().getTime(),
+          showDate: false,
+          selDate: 0
+        })
         wx.switchTab({
           url: '../home/index',
         })

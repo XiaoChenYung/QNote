@@ -2,8 +2,8 @@
 <form bindsubmit="formSubmit" report-submit="true">
   <view class='group'>
     <van-cell-group>
-      <van-field bind:input="onTitleChange" value="{{ title }}" placeholder="请输入标题" label="标题" required clearable />
-      <van-field bind:input="onDetailChange" value="{{ message }}" label="详情" type="textarea" required placeholder="请输入详情(高度会自适应)" autosize />
+      <van-field value="{{title}}" bind:input="onTitleChange" placeholder="请输入标题" label="标题" required clearable />
+      <van-field value="{{detail}}" bind:input="onDetailChange" label="详情" type="textarea" required placeholder="请输入详情(高度会自适应)" autosize />
     </van-cell-group>
   </view>
   <view class='group'>
