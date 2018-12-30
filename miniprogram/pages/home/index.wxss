@@ -8,6 +8,16 @@ page {
 }
 .info {
   padding: 10px 15px;
-  font-size: 15px;
+  font-size: 12px;
   color: #666666;
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+}
+.footer van-button {
+  margin-left: 10px;
+}
+.footer van-button:first-child {
+  margin-left: auto;
 }

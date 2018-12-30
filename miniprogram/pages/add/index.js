@@ -108,6 +108,11 @@ Page({
       return
     }
     const db = wx.cloud.database()
+    Toast.loading({
+      mask: false,
+      message: '创建中...'
+    });
+
     db.collection('note').add({
       // data 字段表示需新增的 JSON 数据
       data: {
@@ -121,7 +126,9 @@ Page({
       }
     })
       .then(res => {
-        console.log(res)
+        wx.switchTab({
+          url: '../home/index',
+        })
       })
       .catch(console.error)
   },
