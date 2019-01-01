@@ -1,5 +1,5 @@
 <!--miniprogram/pages/share/index.wxml-->
-<van-panel title="{{item.title}}" desc="{{item.detail}}" status="进行中" use-footer-slot footer-class="fotter">
+<van-panel wx:if="{{item != null}}" title="{{item.title}}" desc="{{item.detail}}" status="进行中" use-footer-slot footer-class="fotter">
   <view class='info'>
     <view wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
     <view wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>

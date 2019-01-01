@@ -2,6 +2,7 @@
 import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
 import Dialog from '../../miniprogram_npm/vant-weapp/dialog/dialog';
 const app = getApp()
+var shareItem = null
 
 Page({
   data: {
@@ -37,6 +38,16 @@ Page({
       refreshDate(that)
     }
   },
+  onShareAppMessage: function (e) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(shareItem)
+    }
+    return {
+      title: shareItem.title,
+      path: '../share/index?id=' + shareItem._id
+    }
+  },
   close: function (e) {
     console.log(e)
     closeNote(this, e.currentTarget.dataset.item._id)
@@ -52,6 +63,7 @@ Page({
         // on close
       });
     } else {
+      shareItem = e.currentTarget.dataset.item
       addCreater(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
     }
   },
@@ -99,6 +111,7 @@ function addCreater(that, creater, nID) {
     }
   })
     .then(res => {
+      Toast.clear()
       that.setData({
         showActionSheet: true
       })

@@ -9,8 +9,8 @@
     </view>
     <view class='footer' slot="footer">
       <label>创建时间：{{item.showCreateTime}}</label>
-      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bindgetuserinfo='share' custom-class="button" size="small" type="primary">分享</van-button>
-      <van-button data-item='{{item}}' class='last' bindtap='close' custom-class="button" size="small" type="danger">关闭</van-button>
+      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bindgetuserinfo='share' size="small" type="primary">分享</van-button>
+      <van-button data-item='{{item}}' class='last' bindtap='close' size="small" type="danger">关闭</van-button>
     </view>
   </van-panel>
 </block>
@@ -20,6 +20,6 @@
   <view bindtap='create' class='create'>点击创建</view>
 </view>
 <van-dialog id="van-dialog" />
-<van-action-sheet show="{{ showActionSheet }}" title="支持以下配送方式">
-  <button form-type='submit' custom-class="button" type="primary">添加便签</button>
+<van-action-sheet show="{{ showActionSheet }}" title="分享">
+  <button class='button' open-type='share' type="primary">添加便签</button>
 </van-action-sheet>
