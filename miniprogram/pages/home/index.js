@@ -5,7 +5,8 @@ const app = getApp()
 
 Page({
   data: {
-    notes: []
+    notes: [],
+    showActionSheet: false
   },
 
   onLoad: function() {
@@ -42,6 +43,7 @@ Page({
   },
   share: function (e) {
     console.log(e)
+    var that = this
     if (!e.detail.userInfo) {
       Dialog.alert({
         title: '提示',
@@ -50,7 +52,7 @@ Page({
         // on close
       });
     } else {
-
+      addCreater(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
     }
   },
   create: function () {
@@ -78,6 +80,28 @@ function closeNote(that, _id) {
   })
     .then(res => {
       refreshDate(that)
+    })
+    .catch(err => {
+      Toast.error(err.message)
+    })
+}
+
+function addCreater(that, creater, nID) {
+  Toast.loading({
+    mask: false,
+    message: '配置分享...'
+  });
+  const db = wx.cloud.database()
+  db.collection('note').doc(nID).update({
+    // data 传入需要局部更新的数据
+    data: {
+      creater: creater
+    }
+  })
+    .then(res => {
+      that.setData({
+        showActionSheet: true
+      })
     })
     .catch(err => {
       Toast.error(err.message)

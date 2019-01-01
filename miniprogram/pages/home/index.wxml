@@ -16,7 +16,10 @@
 </block>
 <van-toast id="van-toast" />
 <view class='create-content' wx:if="{{notes.length == 0}}">
-<view class='create-tip'>您还没有便签</view>
-<view bindtap='create' class='create'>点击创建</view>
+  <view class='create-tip'>您还没有便签</view>
+  <view bindtap='create' class='create'>点击创建</view>
 </view>
 <van-dialog id="van-dialog" />
+<van-action-sheet show="{{ showActionSheet }}" title="支持以下配送方式">
+  <button form-type='submit' custom-class="button" type="primary">添加便签</button>
+</van-action-sheet>
