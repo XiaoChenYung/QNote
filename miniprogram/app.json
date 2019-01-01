@@ -2,7 +2,11 @@
   "pages": [
     "pages/home/index",
     "pages/me/index",
-    "pages/add/index"
+    "pages/add/index",
+    "pages/share/index",
+    "pages/me/all",
+    "pages/me/about",
+    "pages/me/setting"
   ],
   "tabBar": {
     "selectedColor": "#f65d72",

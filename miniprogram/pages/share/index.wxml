@@ -1,0 +1,15 @@
+<!--miniprogram/pages/share/index.wxml-->
+<van-panel title="{{item.title}}" desc="{{item.detail}}" status="进行中" use-footer-slot footer-class="fotter">
+  <view class='info'>
+    <view wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
+    <view wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
+    <view wx:if="{{item.showAlertTime.length > 0}}">提醒：{{item.showAlertTime}}</view>
+    <view>创建者：item.creater.nickname</view>
+  </view>
+  <view class='footer' slot="footer">
+    <label>创建时间：{{item.showCreateTime}}</label>
+    <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bindgetuserinfo='share' custom-class="button" size="small" type="primary">分享</van-button>
+    <van-button data-item='{{item}}' class='last' bindtap='close' custom-class="button" size="small" type="danger">关闭</van-button>
+  </view>
+</van-panel>
+<van-toast id="van-toast" />

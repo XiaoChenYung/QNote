@@ -1,5 +1,6 @@
 //index.js
 import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
+import Dialog from '../../miniprogram_npm/vant-weapp/dialog/dialog';
 const app = getApp()
 
 Page({
@@ -36,10 +37,21 @@ Page({
     }
   },
   close: function (e) {
-    console.log(app.globalData.openID)
+    console.log(e)
+    closeNote(this, e.currentTarget.dataset.item._id)
   },
   share: function (e) {
-    console.log(app.globalData.openID)
+    console.log(e)
+    if (!e.detail.userInfo) {
+      Dialog.alert({
+        title: '提示',
+        message: '分享内容需要获取用户昵称，头像等公开信息，您可以在小程序设置里重新授权'
+      }).then(() => {
+        // on close
+      });
+    } else {
+
+    }
   },
   create: function () {
     wx.switchTab({
@@ -52,6 +64,26 @@ function getLocalTime(date) {
   return date.toLocaleString().replace(/:\d{1,2}$/, ' ');
 }
 
+function closeNote(that, _id) {
+  Toast.loading({
+    mask: false,
+    message: '正在关闭...'
+  });
+  const db = wx.cloud.database()
+  db.collection('note').doc(_id).update({
+    // data 传入需要局部更新的数据
+    data: {
+      status: 9
+    }
+  })
+    .then(res => {
+      refreshDate(that)
+    })
+    .catch(err => {
+      Toast.error(err.message)
+    })
+}
+
 function refreshDate(that) {
   Toast.loading({
     mask: false,
@@ -61,6 +93,7 @@ function refreshDate(that) {
   db.collection('note')
     .where({
       _openid: app.globalData.openID, // 填入当前用户 openid
+      status: 1
     })
     .limit(10) // 限制返回数量为 10 条
     .get()
@@ -81,6 +114,6 @@ function refreshDate(that) {
     })
     .catch(err => {
       console.log(err.message)
-      // Toast.error(err)
+      Toast.error(err.message)
     })
 }

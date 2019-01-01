@@ -4,13 +4,13 @@
     <view class='info'>
       <view wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
       <view wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
-      <view wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</view>
+      <view wx:if="{{item.showAlertTime.length > 0}}">提醒：{{item.showAlertTime}}</view>
       <view>分享：暂无好友分享</view>
     </view>
     <view class='footer' slot="footer">
       <label>创建时间：{{item.showCreateTime}}</label>
-      <van-button class='first' bindtap='share' custom-class="button" size="small" type="primary">分享</van-button>
-      <van-button class='last' bindtap='cose' custom-class="button" size="small" type="danger">关闭</van-button>
+      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bindgetuserinfo='share' custom-class="button" size="small" type="primary">分享</van-button>
+      <van-button data-item='{{item}}' class='last' bindtap='close' custom-class="button" size="small" type="danger">关闭</van-button>
     </view>
   </van-panel>
 </block>
@@ -19,3 +19,4 @@
 <view class='create-tip'>您还没有便签</view>
 <view bindtap='create' class='create'>点击创建</view>
 </view>
+<van-dialog id="van-dialog" />
