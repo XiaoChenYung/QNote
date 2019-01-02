@@ -21,6 +21,9 @@ page {
   font-size: 12px;
   color: #999999;
 }
+.address {
+  margin-top: 10px;
+}
 .footer {
   display: flex;
   flex-direction: row;

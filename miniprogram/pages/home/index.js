@@ -42,10 +42,13 @@ Page({
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(shareItem)
+      this.setData({
+        showActionSheet: false
+      })
     }
     return {
       title: shareItem.title,
-      path: '../share/index?id=' + shareItem._id
+      path: '/pages/share/index?id=' + shareItem._id
     }
   },
   close: function (e) {
@@ -66,6 +69,16 @@ Page({
       shareItem = e.currentTarget.dataset.item
       addCreater(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
     }
+  },
+  closeAction: function () {
+    this.setData({
+      showActionSheet: false
+    })
+  },
+  cancelAction: function () {
+    this.setData({
+      showActionSheet: false
+    })
   },
   create: function () {
     wx.switchTab({

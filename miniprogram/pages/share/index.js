@@ -33,6 +33,27 @@ Page({
         Toast.fail(err.message)
       })
   },
+  recept: function (e) {
+    console.log(e)
+    var that = this
+    if (!e.detail.userInfo) {
+      Dialog.alert({
+        title: '提示',
+        message: '分享内容需要获取用户昵称，头像等公开信息，您可以在小程序设置里重新授权'
+      }).then(() => {
+        // on close
+      });
+    } else {
+      shareItem = e.currentTarget.dataset.item
+      addCreater(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
+    }
+  },
+  reject: function () {
+    console.log('hhh')
+    wx.switchTab({
+      url: '/pages/home/index',
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
