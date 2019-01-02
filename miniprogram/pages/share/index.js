@@ -1,4 +1,6 @@
 // miniprogram/pages/share/index.js
+import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
+
 Page({
 
   /**
@@ -13,15 +15,23 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    Toast.loading({
+      mask: false,
+      message: '获取数据...'
+    });
     const db = wx.cloud.database()
-    db.collection('notes').doc(options.id).get({
-      success(res) {
+    db.collection('note').doc(options.id).get()
+      .then(res => {
+        Toast.clear()
         console.log(res.data)
+        res.data.showCreateTime = getLocalTime(res.data.c_date)
         that.setData({
           item: res.data
         })
-      }
-    })
+      })
+      .catch(err => {
+        Toast.fail(err.message)
+      })
   },
 
   /**
@@ -73,3 +83,7 @@ Page({
 
   }
 })
+
+function getLocalTime(date) {
+  return date.toLocaleString().replace(/:\d{1,2}$/, ' ');
+}

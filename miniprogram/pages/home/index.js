@@ -10,12 +10,12 @@ Page({
     showActionSheet: false
   },
 
-  onLoad: function() {
-    
+  onLoad: function () {
+
   },
   onShow: function () {
     var that = this
-    if(!app.globalData.openID) {
+    if (!app.globalData.openID) {
       // 调用云函数
       Toast.loading({
         mask: false,
@@ -31,14 +31,14 @@ Page({
         },
         fail: err => {
           console.error('[云函数] [login] 调用失败', err)
-          Toast.error(err)
+          Toast.fail(err)
         }
       })
     } else {
       refreshDate(that)
     }
   },
-  onShareAppMessage: function (e) {
+  onShareAppMessage: function (res) {
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(shareItem)
@@ -78,6 +78,17 @@ function getLocalTime(date) {
   return date.toLocaleString().replace(/:\d{1,2}$/, ' ');
 }
 
+function getStatusClass(status) {
+  switch (status) {
+    case 1:
+      return "header-ing"
+    case 9:
+      return "header-done"
+    default:
+      return "header-done"
+  }
+}
+
 function closeNote(that, _id) {
   Toast.loading({
     mask: false,
@@ -94,7 +105,7 @@ function closeNote(that, _id) {
       refreshDate(that)
     })
     .catch(err => {
-      Toast.error(err.message)
+      Toast.fail(err.message)
     })
 }
 
@@ -117,7 +128,7 @@ function addCreater(that, creater, nID) {
       })
     })
     .catch(err => {
-      Toast.error(err.message)
+      Toast.fail(err.message)
     })
 }
 
@@ -145,12 +156,13 @@ function refreshDate(that) {
             e.showAlertTime = ""
           }
           e.showCreateTime = getLocalTime(e.c_date)
+          e.statusClass = getStatusClass(e.status)
           return e
         })
       })
     })
     .catch(err => {
       console.log(err.message)
-      Toast.error(err.message)
+      Toast.fail(err.message)
     })
 }

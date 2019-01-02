@@ -8,6 +8,11 @@
     "pages/me/about",
     "pages/me/setting"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "添加位置或天气需要授权获取位置"
+    }
+  },
   "tabBar": {
     "selectedColor": "#f65d72",
     "list": [
@@ -35,7 +40,7 @@
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "企鹅便签",
     "navigationBarTextStyle": "black"
   }
 }

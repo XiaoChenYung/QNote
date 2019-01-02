@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -48,7 +48,14 @@
 				{
 					"id": -1,
 					"name": "home",
-					"pathName": "pages/home/index"
+					"pathName": "pages/home/index",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "share",
+					"pathName": "pages/share/index",
+					"query": "id=XCw27t7E7L4wE9Q0"
 				}
 			]
 		}

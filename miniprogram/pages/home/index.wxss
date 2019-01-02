@@ -6,10 +6,20 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+.header-ing .panel-index--van-panel__header-value {
+  color: #4b0;
+}
+.header-done .panel-index--van-panel__header-value {
+  color: #f44;
+}
 .info {
   padding: 10px 15px;
-  font-size: 12px;
+  font-size: 14px;
   color: #666666;
+}
+.info .tip {
+  font-size: 12px;
+  color: #999999;
 }
 .footer {
   display: flex;
