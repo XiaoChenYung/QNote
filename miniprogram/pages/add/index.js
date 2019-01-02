@@ -134,7 +134,7 @@ Page({
         a_date: new Date(that.data.selDate),
         address: that.data.address,
         weather: that.data.weather,
-        open_id: e.detail.formId,
+        form_id_id: e.detail.formId,
         status: 1,
         friends: []
       }

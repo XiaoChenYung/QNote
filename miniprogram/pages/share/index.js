@@ -1,5 +1,6 @@
 // miniprogram/pages/share/index.js
 import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
+const app = getApp()
 
 Page({
 
@@ -14,6 +15,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+      var that = this
+      if (!app.globalData.openID) {
+        // 调用云函数
+        Toast.loading({
+          mask: false,
+          message: '登陆中...'
+        });
+        wx.cloud.callFunction({
+          name: 'login',
+          data: {},
+          success: res => {
+            console.log('[云函数] [login] user openid: ', res.result.openid)
+            app.globalData.openID = res.result.openid
+            refreshDate(that)
+          },
+          fail: err => {
+            console.error('[云函数] [login] 调用失败', err)
+            Toast.fail(err)
+          }
+        })
+      } else {
+        refreshDate(that)
+      }
     var that = this
     Toast.loading({
       mask: false,
