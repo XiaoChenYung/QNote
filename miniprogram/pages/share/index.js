@@ -28,7 +28,7 @@ Page({
           success: res => {
             console.log('[云函数] [login] user openid: ', res.result.openid)
             app.globalData.openID = res.result.openid
-            refreshDate(that)
+            refreshData(that, options.id)
           },
           fail: err => {
             console.error('[云函数] [login] 调用失败', err)
@@ -36,26 +36,8 @@ Page({
           }
         })
       } else {
-        refreshDate(that)
+        refreshData(that, options.id)
       }
-    var that = this
-    Toast.loading({
-      mask: false,
-      message: '获取数据...'
-    });
-    const db = wx.cloud.database()
-    db.collection('note').doc(options.id).get()
-      .then(res => {
-        Toast.clear()
-        console.log(res.data)
-        res.data.showCreateTime = getLocalTime(res.data.c_date)
-        that.setData({
-          item: res.data
-        })
-      })
-      .catch(err => {
-        Toast.fail(err.message)
-      })
   },
   recept: function (e) {
     console.log(e)
@@ -68,8 +50,7 @@ Page({
         // on close
       });
     } else {
-      shareItem = e.currentTarget.dataset.item
-      addCreater(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
+      addShareUser(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
     }
   },
   reject: function () {
@@ -131,4 +112,43 @@ Page({
 
 function getLocalTime(date) {
   return date.toLocaleString().replace(/:\d{1,2}$/, ' ');
+}
+
+function refreshData(that, nID) {
+  Toast.loading({
+    mask: false,
+    message: '获取数据...'
+  });
+  const db = wx.cloud.database()
+  db.collection('note').doc(nID).get()
+    .then(res => {
+      Toast.clear()
+      console.log(res.data)
+      res.data.showCreateTime = getLocalTime(res.data.c_date)
+      that.setData({
+        item: res.data
+      })
+    })
+    .catch(err => {
+      Toast.fail(err.message)
+    })
+}
+
+function addShareUser(that, user, nID) {
+  wx.cloud.callFunction({
+    name: 'joinNote',
+    data: {
+      user: user,
+      nID: nID
+    },
+    success: res => {
+      console.log('[云函数] [login] user openid: ', res.result.openid)
+      app.globalData.openID = res.result.openid
+      refreshData(that, options.id)
+    },
+    fail: err => {
+      console.error('[云函数] [login] 调用失败', err)
+      Toast.fail(err)
+    }
+  })
 }
