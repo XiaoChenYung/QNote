@@ -8,7 +8,7 @@
     </view>
     <view class='footer' slot="footer">
       <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>
-      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bindgetuserinfo='share' size="small" type="primary">分享</van-button>
+      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bind:getuserinfo='share' size="small" type="primary">分享</van-button>
       <van-button data-item='{{item}}' class='last' bindtap='close' size="small" type="danger">关闭</van-button>
     </view>
   </van-panel>

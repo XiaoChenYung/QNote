@@ -7,11 +7,11 @@ const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  const {user, nID} = event
+  const {user, nID, formID} = event
   try {
     let note = await db.collection('note').doc(nID).get()
     let openID = wxContext.OPENID
-    let friends = note.friends
+    let friends = note.data.friends
     let temp = 0
     for(var i = 0; i < friends.length; i++) {
       if(friends[i].open_id == openID) {
@@ -28,17 +28,26 @@ exports.main = async (event, context) => {
         friends: friends
       }
     })
-    if (result.updated == 1) {
-      note.type = 2
-      note.frients = []
+    if (result.stats.updated == 1) {
       let newNID = await db.collection('note').add({
-        data: note
+        data: {
+          title: note.data.title,
+          detail: note.data.detail,
+          c_date: note.data.c_date,
+          a_date: note.data.a_date,
+          address: note.data.address,
+          weather: note.data.weather,
+          form_id: formId,
+          status: 1, // 进行中
+          type: 2, // 自己创建的
+          friends: []
+        }
       })
       return {
-        code: -1,
+        code: 0,
         message: "加入成功",
         data: {
-          id: newNID
+          id: newNID.data
         }
       }
     } else {
