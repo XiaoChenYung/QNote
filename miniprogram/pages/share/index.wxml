@@ -7,8 +7,13 @@
   </view>
   <view class='footer' slot="footer">
     <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>
-    <van-button open-type="getUserInfo" data-item='{{item}}' bindgetuserinfo='recept' class='first' custom-class="button" size="small" type="primary">接受</van-button>
-    <van-button data-item='{{item}}' class='last' bindtap='reject' custom-class="button" size="small" type="danger">拒绝</van-button>
+    <van-button open-type="getUserInfo" data-item='{{item}}' bindgetuserinfo='recept' class='first' size="small" type="primary">接受</van-button>
+    <van-button data-item='{{item}}' class='last' bindtap='reject' size="small" type="danger">拒绝</van-button>
   </view>
 </van-panel>
 <van-toast id="van-toast" />
+<van-action-sheet bind:close="closeAction" bind:cancel="cancelAction" show="{{ showActionSheet }}" title="确定加入便签？">
+  <form bindsubmit="formSubmit" report-submit="true">
+    <button class='button' form-type='submit' type="primary">加入便签</button>
+  </form>
+</van-action-sheet>

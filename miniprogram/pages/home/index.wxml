@@ -19,6 +19,6 @@
   <view bindtap='create' class='create'>点击创建</view>
 </view>
 <van-dialog id="van-dialog" />
-<van-action-sheet bind:close="closeAction" bind:cancel="cancelAction" show="{{ showActionSheet }}" title="分享">
+<van-action-sheet bind:close="closeAction" bind:cancel="cancelAction" show="{{ showActionSheet }}" title="确定分享该便签？">
   <button class='button' open-type='share' type="primary">分享便签</button>
 </van-action-sheet>

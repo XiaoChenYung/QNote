@@ -32,3 +32,8 @@ page {
 .footer .first {
   margin-left: auto;
 }
+.button {
+  margin: 30px 50rpx 20px;
+  width: 650rpx;
+  background-color: #f65d72 !important;
+}

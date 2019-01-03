@@ -1,6 +1,7 @@
 // miniprogram/pages/share/index.js
 import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
 const app = getApp()
+var user = {}
 
 Page({
 
@@ -8,7 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    item: null
+    item: null,
+    showActionSheet: false
   },
 
   /**
@@ -50,13 +52,31 @@ Page({
         // on close
       });
     } else {
-      addShareUser(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
+      user = e.detail.userInfo
+      this.setData({
+        showActionSheet: true
+      })
     }
   },
   reject: function () {
     console.log('hhh')
     wx.switchTab({
       url: '/pages/home/index',
+    })
+  },
+  formSubmit: function (e) {
+    console.log(e)
+    var that = this
+    addShareUser(that, this.data.item._id, e.detail.formId)
+  },
+  closeAction: function () {
+    this.setData({
+      showActionSheet: false
+    })
+  },
+  cancelAction: function () {
+    this.setData({
+      showActionSheet: false
     })
   },
 
@@ -134,19 +154,30 @@ function refreshData(that, nID) {
     })
 }
 
-function addShareUser(that, user, nID) {
+function addShareUser(that, nID, formID) {
+  that.setData({
+    showActionSheet: false
+  })
+  Toast.loading({
+    mask: false,
+    message: '加入便签...'
+  });
   wx.cloud.callFunction({
     name: 'joinNote',
     data: {
       user: user,
-      nID: nID
+      nID: nID,
+      formID: formID
     },
     success: res => {
-      console.log(res)
+      Toast.clear()
+      wx.switchTab({
+        url: '../home/index',
+      })
     },
     fail: err => {
       console.error('[云函数] [login] 调用失败', err)
-      Toast.fail(err)
+      Toast.fail(err.message)
     }
   })
 }

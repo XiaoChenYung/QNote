@@ -28,33 +28,26 @@ exports.main = async (event, context) => {
         friends: friends
       }
     })
-    if (result.stats.updated == 1) {
-      let newNID = await db.collection('note').add({
-        data: {
-          title: note.data.title,
-          detail: note.data.detail,
-          c_date: note.data.c_date,
-          a_date: note.data.a_date,
-          address: note.data.address,
-          weather: note.data.weather,
-          form_id: formId,
-          status: 1, // 进行中
-          type: 2, // 自己创建的
-          friends: []
-        }
-      })
-      return {
-        code: 0,
-        message: "加入成功",
-        data: {
-          id: newNID.data
-        }
+    let newNID = await db.collection('note').add({
+      data: {
+        _openid: openID,
+        title: note.data.title,
+        detail: note.data.detail,
+        c_date: note.data.c_date,
+        a_date: note.data.a_date,
+        address: note.data.address,
+        weather: note.data.weather,
+        form_id: formID,
+        status: 1, // 进行中
+        type: 2, // 自己创建的
+        friends: []
       }
-    } else {
-      return {
-        code: -1,
-        message: "数据库操作失败",
-        data: null
+    })
+    return {
+      code: 0,
+      message: "加入成功",
+      data: {
+        id: newNID._id
       }
     }
   } catch (e) {
