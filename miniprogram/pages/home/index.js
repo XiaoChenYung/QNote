@@ -163,7 +163,7 @@ function refreshDate(that) {
       console.log(res.data)
       that.setData({
         notes: res.data.map(function (e) {
-          if (e.a_date.getFullYear() > 2000) {
+          if (e.a_date) {
             e.showAlertTime = getLocalTime(e.a_date)
           } else {
             e.showAlertTime = ""

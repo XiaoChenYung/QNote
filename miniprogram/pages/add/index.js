@@ -131,10 +131,11 @@ Page({
         title: title,
         detail: detail,
         c_date: new Date(),
-        a_date: new Date(that.data.selDate),
+        a_date: that.data.selDate > 0 ? new Date(that.data.selDate) : null,
         address: that.data.address,
         weather: that.data.weather,
         form_id_id: e.detail.formId,
+        creater: null,
         status: 1,
         type: 1, // 自己创建的
         friends: []
