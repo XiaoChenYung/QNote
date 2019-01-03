@@ -22,6 +22,12 @@ exports.main = async (event, context) => {
     if (friends.length == 0 || temp == friends.length) {
       user.open_id = openID
       friends.push(user)
+    } else {
+      return {
+        code: -1,
+        message: "已经加入",
+        data: null
+      }
     }
     let result = await db.collection('note').doc(nID).update({
       data: {

@@ -170,10 +170,20 @@ function addShareUser(that, nID, formID) {
       formID: formID
     },
     success: res => {
-      Toast.clear()
-      wx.switchTab({
-        url: '../home/index',
-      })
+      console.log(res)
+      if (res.result.code == 0) {
+        Toast.clear()
+        wx.switchTab({
+          url: '../home/index',
+        })
+      } else {
+        Toast.fail(res.result.message)
+        setTimeout(function () {
+          wx.switchTab({
+            url: '../home/index',
+          })
+        }, 1000)
+      }
     },
     fail: err => {
       console.error('[云函数] [login] 调用失败', err)

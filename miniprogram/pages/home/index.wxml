@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <block wx:key="{{index}}" wx:for="{{notes}}">
-  <van-panel header-class="{{item.statusClass}}" title="{{item.title}}" desc="创建时间：{{item.showCreateTime}}" status="进行中" use-footer-slot footer-class="fotter">
+  <van-panel custom-class="panel" header-class="{{item.statusClass}}" title="{{item.title}}" desc="创建时间：{{item.showCreateTime}}" status="进行中" use-footer-slot footer-class="fotter">
     <view class='info'>
       <view class='detail'>{{item.detail}}</view>
       <view class='address tip' wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
