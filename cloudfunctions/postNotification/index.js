@@ -24,8 +24,11 @@ exports.main = async (event, context) => {
 
     for (let j = 0; j < result.data.length; j++) {
       let url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + access_token
+      console.log(typeof(url))
       let note = result.data[j]
-      await httprequest(url, {
+      console.log(note)
+      let body = {
+        "access_token": access_token,
         "touser": note._openid,
         "template_id": "cRlzk1ENZeVAroA4ZNUCjdeybBbb82--_uzRoAhKrKE",
         "page": "/pages/home/index",
@@ -51,7 +54,9 @@ exports.main = async (event, context) => {
           }
         },
         "emphasis_keyword": "keyword1.DATA"
-      })
+      }
+      console.log(body)
+      await httprequest(url, JSON.stringify(body))
     }
   }
 }
