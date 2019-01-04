@@ -17,7 +17,7 @@
 </block>
 <van-toast id="van-toast" />
 <view class='create-content' wx:if="{{notes.length == 0}}">
-  <view class='create-tip'>您还没有已提醒的便签</view>
+  <view class='create-tip'>您没有已提醒的便签</view>
 </view>
 <van-dialog id="van-dialog" />
 <!-- <van-action-sheet bind:close="closeAction" bind:cancel="cancelAction" show="{{ showActionSheet }}" title="确定分享该便签？">

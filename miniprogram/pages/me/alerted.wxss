@@ -32,7 +32,7 @@ page {
   flex-direction: row;
 }
 .footer .last {
-  margin-left: 10px;
+  margin-left: auto;
 }
 .footer label {
   font-size: 11px;
