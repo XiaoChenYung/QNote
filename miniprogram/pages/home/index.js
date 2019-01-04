@@ -11,7 +11,7 @@ Page({
   },
 
   onLoad: function () {
-
+    console.log(123456 / 10)
   },
   onShow: function () {
     var that = this

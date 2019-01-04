@@ -7,6 +7,9 @@ const db = cloud.database()
 const MAX_LIMIT = 100
 // 云函数入口函数
 exports.main = async (event, context) => {
+  let _timestamp = new Date().getTime()
+  let currentMinute = _timestamp / 1000 / 60
+  let currentMinuteDate = new Date(parseInt(currentMinute) * 1000 * 60)
   const wxContext = cloud.getWXContext()
   const _ = db.command
   let note = await db.collection('access_token').doc("XC2OzlsqTi00tlHC").get()
@@ -14,13 +17,17 @@ exports.main = async (event, context) => {
   console.log(access_token)
   // 先取出集合记录总数
   const countResult = await db.collection('note').where({
-    a_date: _.neq(null)
+    a_date: _.eq(currentMinuteDate),
+    status: 1
   }).count()
   const total = countResult.total
   // 计算需分几次取
   const batchTimes = Math.ceil(total / 100)
   for (let i = 0; i < batchTimes; i++) {
-    const result = await db.collection('note').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
+    const result = await db.collection('note').where({
+      a_date: _.eq(currentMinuteDate),
+      status: 1
+    }).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
 
     for (let j = 0; j < result.data.length; j++) {
       let url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + access_token

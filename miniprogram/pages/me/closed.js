@@ -1,4 +1,4 @@
-// miniprogram/pages/home/all.js
+// miniprogram/pages/me/closed.js
 Page({
 
   /**

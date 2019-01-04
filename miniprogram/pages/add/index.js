@@ -20,7 +20,8 @@ Page({
     minDate: new Date().getTime(),
     currentDate: new Date().getTime(),
     showDate: false,
-    selDate: 0
+    selDate: 0,
+    popupFix: false
   },
 
   /**
@@ -149,8 +150,6 @@ Page({
           address: "",
           weather: "",
           time: "",
-          minHour: 10,
-          maxHour: 20,
           minDate: new Date().getTime(),
           currentDate: new Date().getTime(),
           showDate: false,
@@ -173,7 +172,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      minDate: new Date().getTime(),
+      currentDate: new Date().getTime(),
+      popupFix: false
+    })
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        popupFix: true
+      })
+    }, 100)
   },
 
   /**

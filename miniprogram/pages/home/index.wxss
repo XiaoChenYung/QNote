@@ -7,7 +7,7 @@ page {
   justify-content: flex-start;
 }
 .panel {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .header-ing .panel-index--van-panel__header-value {
   color: #4b0;

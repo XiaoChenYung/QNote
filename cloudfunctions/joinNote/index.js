@@ -25,7 +25,7 @@ exports.main = async (event, context) => {
     } else {
       return {
         code: -1,
-        message: "已经加入",
+        message: "重复加入",
         data: null
       }
     }

@@ -4,9 +4,10 @@
     "pages/me/index",
     "pages/add/index",
     "pages/share/index",
-    "pages/me/all",
     "pages/me/about",
-    "pages/me/setting"
+    "pages/me/setting",
+    "pages/me/alerted",
+    "pages/me/closed"
   ],
   "permission": {
     "scope.userLocation": {
