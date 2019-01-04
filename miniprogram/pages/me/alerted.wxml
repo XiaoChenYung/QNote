@@ -11,7 +11,7 @@
     </view>
     <view class='footer' slot="footer">
       <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>
-      <van-button data-item='{{item}}' class='last' bindtap='close' size="small" type="danger">删除</van-button>
+      <van-button data-item='{{item}}' class='last' bindtap='deleteItem' size="small" type="danger">删除</van-button>
     </view>
   </van-panel>
 </block>

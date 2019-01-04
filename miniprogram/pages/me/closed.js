@@ -86,6 +86,26 @@ Page({
       addCreater(that, e.detail.userInfo, e.currentTarget.dataset.item._id)
     }
   },
+  deleteItem: function (e) {
+    var that = this
+    Toast.loading({
+      mask: false,
+      message: '正在删除...'
+    });
+    const db = wx.cloud.database()
+    db.collection('note').doc(e.currentTarget.dataset.item._id).update({
+      // data 传入需要局部更新的数据
+      data: {
+        status: 9
+      }
+    })
+      .then(res => {
+        refreshDate(that)
+      })
+      .catch(err => {
+        Toast.fail(err.message)
+      })
+  },
   closeAction: function () {
     this.setData({
       showActionSheet: false

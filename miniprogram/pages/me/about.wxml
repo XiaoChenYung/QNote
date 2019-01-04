@@ -3,12 +3,12 @@
     <image class="left-blue-dot"></image>
     <text class="title">软件介绍</text>
   </view>
-  <view class="index-desc">企鹅闹钟的主要功能在于您可以为您的好友设置提醒。它不需要您在具体的时间提醒好友，而是提前设定好时间，我们利用微信的通知在您设定的时间提醒您的好友。当然您也可以为自己设定提醒。鉴于微信API的限制，目前只支持7天内的提醒。</view>
+  <view class="index-desc">企鹅便签的主要功能是创建一个个便签，您可以随时关闭便签，便签可以加上提醒时间，地点，当时的天气等。您还可以将便签分享给好友。如果设置提醒时间您将在设定的时间收到微信的提醒。鉴于微信API的限制，目前只支持7天内的提醒。</view>
   <view style='margin-top: 15px;'>
     <image class="left-blue-dot"></image>
     <text class="title">关于作者</text>
   </view>
-  <view class="index-desc">我是杨晓晨，目前从事iOS，前端，小程序，Node.js 开发，对互联网新兴技术有着比较浓厚的兴趣，企鹅闹钟是我业余开发的项目，如果您觉得企鹅闹钟能帮助到您，您可以点击然后长按识别下面二维码对我们进行打赏以支付服务器和带宽的成本。谢谢您的支持。🤪</view>
+  <view class="index-desc">我是杨晓晨，目前从事iOS，前端，小程序，Node.js 开发，对互联网新兴技术有着比较浓厚的兴趣，企鹅便签是我业余开发的项目，如果您觉得企鹅便签能帮助到您，欢迎您点击然后长按识别下面二维码对我们进行打赏以支持服务器和带宽的成本。谢谢您的支持。</view>
   <view class='center-image'>
     <image bindtap='recognizeImg' bindlongtap='recognizeImg' class="fee-image" src="https://wx3.sinaimg.cn/mw690/006p0fJqgy1fnh41c848sj30jg0jgq7j.jpg"></image>
   </view>

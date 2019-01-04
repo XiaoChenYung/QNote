@@ -44,6 +44,7 @@ exports.main = async (event, context) => {
         address: note.data.address,
         weather: note.data.weather,
         form_id: formID,
+        creater: {},
         status: 1, // 进行中
         type: 2, // 自己创建的
         friends: []
