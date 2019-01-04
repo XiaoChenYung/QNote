@@ -2,13 +2,13 @@
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
-		"nodeModules": true
+		"nodeModules": true,
+		"autoAudits": false
 	},
 	"appid": "wx4f796b958e2e1253",
 	"projectname": "%E4%BC%81%E9%B9%85%E4%BE%BF%E7%AD%BE",
@@ -55,7 +55,7 @@
 					"id": 3,
 					"name": "share",
 					"pathName": "pages/share/index",
-					"query": "id=XC18PMDR1TiNSe_F"
+					"query": "id=XC8GVJT75u22-sg6"
 				}
 			]
 		}

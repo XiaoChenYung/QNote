@@ -27,6 +27,19 @@ page {
 .address {
   margin-top: 10px;
 }
+.friends {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+}
+.friends image {
+  width: 30px;
+  border-radius: 15px;
+  height: 30px;
+  margin: 5px;
+  border: 1px solid #f65d72;
+}
 .footer {
   display: flex;
   flex-direction: row;

@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "进行中便签",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "van-button": "../../miniprogram_npm/vant-weapp/button/index",
     "van-toast": "../../miniprogram_npm/vant-weapp/toast/index",

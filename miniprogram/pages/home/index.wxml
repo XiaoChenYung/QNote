@@ -5,6 +5,9 @@
       <view class='detail'>{{item.detail}}</view>
       <view class='address tip' wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
       <view class='weather tip' wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
+      <view class='friends' wx:if="{{item.friends.length > 0}}">
+        <image wx:key="{{idx}}" wx:for-index="idx" wx:for-item="fItem" wx:for="{{item.friends}}" src="{{fItem.avatarUrl}}"></image>
+      </view>
     </view>
     <view class='footer' slot="footer">
       <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>

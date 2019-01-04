@@ -136,7 +136,7 @@ Page({
         address: that.data.address,
         weather: that.data.weather,
         form_id: e.detail.formId,
-        creater: null,
+        creater: {},
         status: 1,
         type: 1, // 自己创建的
         friends: []

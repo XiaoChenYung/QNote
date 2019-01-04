@@ -29,6 +29,12 @@ Page({
 
   },
 
+  recognizeImg: function () {
+    wx.previewImage({
+      urls: ['https://wx3.sinaimg.cn/mw690/006p0fJqgy1fnh41c848sj30jg0jgq7j.jpg']
+    })
+  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */

@@ -3,17 +3,16 @@ import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
 import Dialog from '../../miniprogram_npm/vant-weapp/dialog/dialog';
 const app = getApp()
 var shareItem = null
+var curCount = 0
 
 Page({
   data: {
     notes: [],
-    showActionSheet: false
+    showActionSheet: false,
+    hasMore: true
   },
 
   onLoad: function () {
-    console.log(123456 / 10)
-  },
-  onShow: function () {
     var that = this
     if (!app.globalData.openID) {
       // 调用云函数
@@ -37,6 +36,23 @@ Page({
     } else {
       refreshDate(that)
     }
+  },
+  onShow: function () {
+    
+  },
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    var that = this
+    refreshDate(that)
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    var that = this
+    loadMore(that)
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
@@ -111,7 +127,7 @@ function closeNote(that, _id) {
   db.collection('note').doc(_id).update({
     // data 传入需要局部更新的数据
     data: {
-      status: 9
+      status: 3
     }
   })
     .then(res => {
@@ -141,6 +157,7 @@ function addCreater(that, creater, nID) {
       })
     })
     .catch(err => {
+      console.log(err)
       Toast.fail(err.message)
     })
 }
@@ -156,12 +173,16 @@ function refreshDate(that) {
       _openid: app.globalData.openID, // 填入当前用户 openid
       status: 1
     })
-    .limit(10) // 限制返回数量为 10 条
+    .limit(20) // 限制返回数量为 20 条
     .get()
     .then(res => {
       Toast.clear()
+      wx.stopPullDownRefresh()
       console.log(res.data)
+      let hasMore = res.data.length >= 20
+      curCount = res.data.length
       that.setData({
+        hasMore: hasMore,
         notes: res.data.map(function (e) {
           if (e.a_date) {
             e.showAlertTime = getLocalTime(e.a_date)
@@ -173,6 +194,49 @@ function refreshDate(that) {
           return e
         })
       })
+    })
+    .catch(err => {
+      wx.stopPullDownRefresh()
+      console.log(err.message)
+      Toast.fail(err.message)
+    })
+}
+
+function loadMore(that) {
+  Toast.loading({
+    mask: false,
+    message: '获取数据...'
+  });
+  const db = wx.cloud.database()
+  console.log(curCount, new Date())
+  db.collection('note')
+    .where({
+      _openid: app.globalData.openID, // 填入当前用户 openid
+      status: 1
+    })
+    .limit(20) // 限制返回数量为 20 条
+    .skip(curCount)
+    .get()
+    .then(res => {
+      console.log("数据回来了", res.data, new Date())
+      let hasMore = res.data.length >= 20
+      let moreNotes = res.data.map(function (e) {
+        if (e.a_date) {
+          e.showAlertTime = getLocalTime(e.a_date)
+        } else {
+          e.showAlertTime = ""
+        }
+        e.showCreateTime = getLocalTime(e.c_date)
+        e.statusClass = getStatusClass(e.status)
+        return e
+      })
+      let notes = that.data.notes.concat(moreNotes)
+      curCount = notes.length
+      that.setData({
+        hasMore: hasMore,
+        notes: notes
+      })
+      Toast.clear()
     })
     .catch(err => {
       console.log(err.message)

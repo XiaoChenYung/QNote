@@ -1,1 +1,76 @@
-/* miniprogram/pages/me/closed.wxss */
+/**index.wxss**/
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.panel {
+  margin-bottom: 10px;
+}
+.header-ing .panel-index--van-panel__header-value {
+  color: #4b0;
+}
+.header-done .panel-index--van-panel__header-value {
+  color: #f44;
+}
+.info {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #666666;
+}
+.info .tip {
+  font-size: 12px;
+  color: #999999;
+}
+.address {
+  margin-top: 10px;
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+}
+.footer .last {
+  margin-left: 10px;
+}
+.footer label {
+  font-size: 11px;
+  color: #999999;
+  line-height: 30px;
+}
+.footer .first {
+  margin-left: auto;
+}
+.create-content {
+  text-align: center;
+  font-size: 14px;
+}
+.create-content view {
+  margin-top: 20px;
+}
+.create-tip {
+  color: #999999;
+}
+.create {
+  color: #f65d72;
+  text-decoration:underline;
+}
+.button {
+  margin: 30px 50rpx 20px;
+  width: 650rpx;
+  background-color: #f65d72 !important;
+}
+.friends {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+}
+.friends image {
+  width: 30px;
+  border-radius: 15px;
+  height: 30px;
+  margin: 5px;
+  border: 1px solid #f65d72;
+}

@@ -48,7 +48,7 @@ exports.main = async (event, context) => {
             "value": note.detail
           },
           "keyword3": {
-            "value": note.a_date == null ? "未指定时间" : note.a_date
+            "value": note.a_date == null ? "未指定时间" : getLocalTime(note.a_date)
           },
           "keyword4": {
             "value": note.address.length == 0 ? "未指定地点" : note.address
@@ -64,8 +64,17 @@ exports.main = async (event, context) => {
       }
       console.log(body)
       await httprequest(url, JSON.stringify(body))
+      await db.collection('note').doc(note._id).update({
+        data: {
+          status: 2
+        }
+      })
     }
   }
+}
+
+function getLocalTime(date) {
+  return date.toLocaleString().replace(/:\d{1,2}$/, ' ');
 }
 
 function httprequest(url, requestData) {
