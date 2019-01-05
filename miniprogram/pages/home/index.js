@@ -12,7 +12,8 @@ Page({
     hasMore: true
   },
 
-  onLoad: function () {
+  onLoad: function (e) {
+    console.log("show", e)
     var that = this
     if (!app.globalData.openID) {
       // 调用云函数
@@ -37,8 +38,12 @@ Page({
       refreshDate(that)
     }
   },
-  onShow: function () {
-    
+  onShow: function (e) {
+    if (wx.getStorageSync("refresh")) {
+      wx.clearStorageSync("refresh")
+      var that = this
+      refreshDate(that)
+    }
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

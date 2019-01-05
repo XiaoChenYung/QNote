@@ -155,6 +155,7 @@ Page({
           showDate: false,
           selDate: 0
         })
+        wx.setStorageSync("refresh", true)
         wx.switchTab({
           url: '../home/index',
         })

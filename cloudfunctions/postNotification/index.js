@@ -15,7 +15,9 @@ exports.main = async (event, context) => {
   let currentMinuteDate = new Date(parseInt(currentMinute) * 1000 * 60)
   const wxContext = cloud.getWXContext()
   const _ = db.command
-  let note = await db.collection('access_token').doc("XC2OzlsqTi00tlHC").get()
+  // let note = await db.collection('access_token').doc("XC2OzlsqTi00tlHC").get()
+  // XC9q83kPDdDCJ3FB
+  let note = await db.collection('access_token').doc("XC9q83kPDdDCJ3FB").get()
   let access_token = note.data.access_token
   console.log(access_token)
   // 先取出集合记录总数
