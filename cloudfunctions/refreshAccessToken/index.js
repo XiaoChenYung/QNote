@@ -11,7 +11,13 @@ exports.main = async (event, context) => {
   result = JSON.parse(result)
   console.log(result)
   console.log(result["access_token"])
-  let updateResult = await db.collection('access_token').doc("XC2OzlsqTi00tlHC").update({
+  // let updateResult = await db.collection('access_token').doc("XC2OzlsqTi00tlHC").update({
+  //   data: {
+  //     access_token: result["access_token"]
+  //   }
+  // })
+  // XC9q83kPDdDCJ3FB
+  let updateResult = await db.collection('access_token').doc("XC9q83kPDdDCJ3FB").update({
     data: {
       access_token: result["access_token"]
     }
