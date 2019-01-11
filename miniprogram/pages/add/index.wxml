@@ -24,7 +24,7 @@
       <van-cell wx:if="{{time.length > 0}}" title="提醒时间 :" value="{{time}}" />
     </van-cell-group>
   </view>
-  <button form-type='submit' type="primary">添加便签</button>
+  <button open-type="getUserInfo" form-type='submit' bind:getuserinfo='readUserInfo' type="primary">添加便签</button>
 </form>
 <van-popup wx:if="{{popupFix}}" show="{{ showDate }}" position="bottom" overlay="{{ true }}" bind:close="onClose">
   <van-datetime-picker type="datetime" bind:confirm="confirm" bind:cancel="cancel" value="{{ currentDate }}" min-date="{{ minDate }}" title="选择时间" />
