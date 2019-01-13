@@ -11,14 +11,14 @@
     </view>
     <view class='footer' slot="footer">
       <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>
-      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bind:getuserinfo='share' size="small" type="primary">发给</van-button>
-      <van-button data-item='{{item}}' class='last' bindtap='close' size="small" type="danger">关闭</van-button>
+      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bind:getuserinfo='share' size="small" type="primary">发给领导</van-button>
+      <van-button data-item='{{item}}' class='last' bindtap='close' size="small" type="danger">销假</van-button>
     </view>
   </van-panel>
 </block>
 <van-toast id="van-toast" />
 <view class='create-content' wx:if="{{notes.length == 0}}">
-  <view class='create-tip'>暂无请假单</view>
+  <view class='create-tip'>暂无进行中的请假单</view>
   <view bindtap='create' class='create'>点击创建</view>
 </view>
 <van-dialog id="van-dialog" />

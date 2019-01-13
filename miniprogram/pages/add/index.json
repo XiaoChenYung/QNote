@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "添加",
+  "navigationBarTitleText": "添加请假单",
   "usingComponents": {
     "van-field": "../../miniprogram_npm/vant-weapp/field/index",
     "van-cell-group": "../../miniprogram_npm/vant-weapp/cell-group/index",
@@ -8,6 +8,8 @@
     "van-switch": "../../miniprogram_npm/vant-weapp/switch/index",
     "van-popup": "../../miniprogram_npm/vant-weapp/popup/index",
     "van-datetime-picker": "../../miniprogram_npm/vant-weapp/datetime-picker/index",
-    "van-toast": "../../miniprogram_npm/vant-weapp/toast/index"
+    "van-toast": "../../miniprogram_npm/vant-weapp/toast/index",
+    "van-dialog": "../../miniprogram_npm/vant-weapp/dialog/index",
+    "van-picker": "../../miniprogram_npm/vant-weapp/picker/index"
   }
 }

@@ -149,7 +149,7 @@ function addCreater(that, creater, nID) {
     message: '配置分享...'
   });
   const db = wx.cloud.database()
-  db.collection('note').doc(nID).update({
+  db.collection('leave').doc(nID).update({
     // data 传入需要局部更新的数据
     data: {
       creater: creater
@@ -173,7 +173,7 @@ function refreshDate(that) {
     message: '获取数据...'
   });
   const db = wx.cloud.database()
-  db.collection('note')
+  db.collection('leave')
     .where({
       _openid: app.globalData.openID, // 填入当前用户 openid
       status: 1
@@ -214,7 +214,7 @@ function loadMore(that) {
   });
   const db = wx.cloud.database()
   console.log(curCount, new Date())
-  db.collection('note')
+  db.collection('leave')
     .where({
       _openid: app.globalData.openID, // 填入当前用户 openid
       status: 1

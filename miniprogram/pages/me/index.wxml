@@ -1,6 +1,6 @@
 <!--miniprogram/pages/me/index.wxml-->
 <view class='logo-content'>
-  <image src='../../images/logo.jpeg'></image>
+  <image src='../../images/logo.png'></image>
 </view>
 <view class='name'>企鹅便签 1.0.0</view>
 <view>

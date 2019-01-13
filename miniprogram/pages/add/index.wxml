@@ -2,8 +2,14 @@
 <form bindsubmit="formSubmit" report-submit="true">
   <view class='group'>
     <van-cell-group>
-      <van-field value="{{title}}" bind:input="onTitleChange" placeholder="请输入标题" label="标题" required clearable />
-      <van-field value="{{detail}}" bind:input="onDetailChange" label="详情" type="textarea" required placeholder="请输入详情(高度会自适应)" autosize />
+      <van-field bind:focus="onTypeFocus" value="{{title}}" placeholder="请选择请假类型" label="请假类型" required />
+      <van-field value="{{detail}}" bind:input="onDetailChange" label="请假原因" type="textarea" required placeholder="请输入请假原因(高度会自适应)" autosize />
+    </van-cell-group>
+  </view>
+  <view class='group'>
+    <van-cell-group>
+      <van-field bind:focus="onTimeStartFocus" value="{{startTime}}" placeholder="选择请假开始时间" label="开始时间" required />
+      <van-field bind:focus="onTimeEndFocus" value="{{endTime}}" placeholder="选择请假结束时间" label="结束时间" required />
     </van-cell-group>
   </view>
   <view class='group'>
@@ -24,9 +30,16 @@
       <van-cell wx:if="{{time.length > 0}}" title="提醒时间 :" value="{{time}}" />
     </van-cell-group>
   </view>
-  <button open-type="getUserInfo" form-type='submit' bind:getuserinfo='readUserInfo' type="primary">添加便签</button>
+  <button open-type="getUserInfo" form-type='submit' bind:getuserinfo='readUserInfo' type="primary">提交请假单</button>
 </form>
-<van-popup wx:if="{{popupFix}}" show="{{ showDate }}" position="bottom" overlay="{{ true }}" bind:close="onClose">
-  <van-datetime-picker type="datetime" bind:confirm="confirm" bind:cancel="cancel" value="{{ currentDate }}" min-date="{{ minDate }}" title="选择时间" />
+<van-popup wx:if="{{popupFix}}" show="{{ showLeaveType }}" position="bottom" overlay="{{ true }}" >
+  <van-picker show-toolbar title="选择请假类型" columns="{{ leaves }}" bind:cancel="onCancelLeaveType" bind:confirm="onConfirmLeaveType" />
+</van-popup>
+<van-popup wx:if="{{popupFix}}" show="{{ showStartDate }}" position="bottom" overlay="{{ true }}" >
+  <van-datetime-picker type="datetime" bind:confirm="onConfirmStartTime" bind:cancel="onCancelStartTime" value="{{ selStartDate }}" min-date="{{ minDate }}" title="选择开始时间" />
+</van-popup>
+<van-popup wx:if="{{popupFix}}" show="{{ showEndDate }}" position="bottom" overlay="{{ true }}" >
+  <van-datetime-picker type="datetime" bind:confirm="onConfirmEndTime" bind:cancel="onCancelEndTime" value="{{ selEndDate }}" min-date="{{ minDate }}" title="选择结束时间" />
 </van-popup>
 <van-toast id="van-toast" />
+<van-dialog id="van-dialog" />

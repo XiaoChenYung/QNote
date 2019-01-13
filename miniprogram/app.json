@@ -19,7 +19,7 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "首页",
+        "text": "进行中",
         "iconPath": "images/home.png",
         "selectedIconPath": "images/home_sel.png"
       },

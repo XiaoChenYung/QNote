@@ -1,6 +1,6 @@
 /* miniprogram/pages/add/index.wxss */
 .group {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 button {
   margin: 30px 50rpx 0;
