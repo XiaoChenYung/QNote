@@ -1,7 +1,7 @@
 {
   "name": "miniprogram",
   "version": "1.0.0",
-  "description": "企鹅便签",
+  "description": "企鹅请假单",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

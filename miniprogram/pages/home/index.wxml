@@ -1,17 +1,19 @@
 <!--index.wxml-->
 <block wx:key="{{index}}" wx:for="{{notes}}">
-  <van-panel custom-class="panel" header-class="{{item.statusClass}}" title="{{item.title}}" desc="创建时间：{{item.showCreateTime}}" status="进行中" use-footer-slot footer-class="fotter">
+  <van-panel custom-class="panel" header-class="{{item.statusClass}}" title="{{item.title}}" desc="创建时间：{{item.showCreateTime}}" status="{{item.statusString}}" use-footer-slot footer-class="fotter">
     <view class='info'>
       <view class='detail'>{{item.detail}}</view>
-      <view class='address tip' wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
-      <view class='weather tip' wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
-      <view class='friends' wx:if="{{item.friends.length > 0}}">
+      <view class='tip'>开始时间：{{item.showStartTime}}</view>
+      <view class='tip'>结束时间：{{item.showEndTime}}</view>
+      <view class='tip' wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
+      <view class='tip' wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
+      <!-- <view class='friends' wx:if="{{item.friends.length > 0}}">
         <image wx:key="{{idx}}" wx:for-index="idx" wx:for-item="fItem" wx:for="{{item.friends}}" src="{{fItem.avatarUrl}}"></image>
-      </view>
+      </view> -->
     </view>
     <view class='footer' slot="footer">
-      <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>
-      <van-button open-type="getUserInfo" data-item='{{item}}' class='first' bind:getuserinfo='share' size="small" type="primary">发给领导</van-button>
+      <!-- <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label> -->
+      <van-button wx:if="{{item.status == 1}}" open-type="getUserInfo" data-item='{{item}}' class='first' bind:getuserinfo='share' size="small" type="primary">发给领导</van-button>
       <van-button data-item='{{item}}' class='last' bindtap='close' size="small" type="danger">销假</van-button>
     </view>
   </van-panel>
@@ -22,6 +24,6 @@
   <view bindtap='create' class='create'>点击创建</view>
 </view>
 <van-dialog id="van-dialog" />
-<van-action-sheet bind:close="closeAction" bind:cancel="cancelAction" show="{{ showActionSheet }}" title="确定分享该便签？">
-  <button class='button' open-type='share' type="primary">分享便签</button>
+<van-action-sheet overlay="{{false}}" bind:close="closeAction" bind:cancel="cancelAction" show="{{ showActionSheet }}" title="确定将请假单发给领导？">
+  <button class='button' open-type='share' type="primary">发给领导</button>
 </van-action-sheet>

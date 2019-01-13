@@ -12,6 +12,9 @@ page {
 .header-ing .panel-index--van-panel__header-value {
   color: #4b0;
 }
+.header-wait .panel-index--van-panel__header-value {
+  color: #7c2e76;
+}
 .header-done .panel-index--van-panel__header-value {
   color: #f44;
 }

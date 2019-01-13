@@ -22,9 +22,11 @@ Page({
     selStartDate: new Date().getTime(),
     startTime: "",
     endTime: "",
+    titleAbled: false,
     selEndDate: new Date().getTime(),
     popupFix: false,
     leaves: [
+      "迟到",
       "病假",
       "事假",
       "婚假",
@@ -43,7 +45,8 @@ Page({
 
   onTypeFocus: function () {
     this.setData({
-      showLeaveType: true
+      showLeaveType: true,
+      titleAbled: true
     })
   },
 
@@ -223,6 +226,7 @@ Page({
         weather: that.data.weather,
         form_id: e.detail.formId,
         status: 1, // 刚创建
+        type: 1 // 我请的假
       }
     })
       .then(res => {

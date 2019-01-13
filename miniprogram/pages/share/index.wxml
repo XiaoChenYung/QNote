@@ -1,19 +1,20 @@
 <!--miniprogram/pages/share/index.wxml-->
-<van-panel wx:if="{{item != null}}" title="{{item.title}}" desc="创建时间：{{item.showCreateTime}}" status="进行中" use-footer-slot footer-class="fotter">
+<van-panel wx:if="{{item != null}}" title="{{item.title}}" desc="创建时间：{{item.showCreateTime}}" status="{{item.statusString}}" header-class="{{item.statusClass}}" use-footer-slot footer-class="fotter">
   <view class='info'>
     <view class='detail'>{{item.detail}}</view>
+    <view class='tip'>开始时间：{{item.showStartTime}}</view>
+      <view class='tip'>结束时间：{{item.showEndTime}}</view>
     <view class='address tip' wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
     <view class='weather tip' wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
   </view>
-  <view class='footer' slot="footer">
-    <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>
-    <van-button open-type="getUserInfo" data-item='{{item}}' bindgetuserinfo='recept' class='first' size="small" type="primary">接受</van-button>
-    <van-button data-item='{{item}}' class='last' bindtap='reject' size="small" type="danger">拒绝</van-button>
+  <view wx:if="{{item.status == 1}}" class='footer' slot="footer">
+    <van-button open-type="getUserInfo" data-item='{{item}}' bindgetuserinfo='recept' class='first' size="small" type="primary">批准</van-button>
+    <van-button data-item='{{item}}' class='last' bindtap='reject' size="small" type="danger">忽略</van-button>
   </view>
 </van-panel>
 <van-toast id="van-toast" />
-<van-action-sheet bind:close="closeAction" bind:cancel="cancelAction" show="{{ showActionSheet }}" title="确定加入便签？">
+<van-action-sheet bind:close="closeAction" bind:cancel="cancelAction" overlay="{{false}}" show="{{ showActionSheet }}" title="确定批准假期？">
   <form bindsubmit="formSubmit" report-submit="true">
-    <button class='button' form-type='submit' type="primary">加入便签</button>
+    <button class='button' form-type='submit' type="primary">确定批准</button>
   </form>
 </van-action-sheet>
