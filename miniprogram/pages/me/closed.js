@@ -93,7 +93,7 @@ Page({
       message: '正在删除...'
     });
     const db = wx.cloud.database()
-    db.collection('note').doc(e.currentTarget.dataset.item._id).update({
+    db.collection('leave').doc(e.currentTarget.dataset.item._id).update({
       // data 传入需要局部更新的数据
       data: {
         status: 9
@@ -123,18 +123,31 @@ Page({
   }
 })
 
-function getLocalTime(date) {
-  return date.toLocaleString().replace(/:\d{1,2}$/, ' ');
-}
-
 function getStatusClass(status) {
   switch (status) {
     case 1:
+      return "header-wait"
+    case 2:
       return "header-ing"
-    case 9:
+    case 3:
       return "header-done"
     default:
       return "header-done"
+  }
+}
+
+function getStatusString(status) {
+  switch (status) {
+    case 1:
+      return "待批准"
+    case 2:
+      return "进行中"
+    case 3:
+      return "已销假"
+    case 9:
+      return "已删除"
+    default:
+      return "未知状态"
   }
 }
 
@@ -154,30 +167,6 @@ function closeNote(that, _id) {
       refreshDate(that)
     })
     .catch(err => {
-      Toast.fail(err.message)
-    })
-}
-
-function addCreater(that, creater, nID) {
-  Toast.loading({
-    mask: false,
-    message: '配置分享...'
-  });
-  const db = wx.cloud.database()
-  db.collection('note').doc(nID).update({
-    // data 传入需要局部更新的数据
-    data: {
-      creater: creater
-    }
-  })
-    .then(res => {
-      Toast.clear()
-      that.setData({
-        showActionSheet: true
-      })
-    })
-    .catch(err => {
-      console.log(err)
       Toast.fail(err.message)
     })
 }
@@ -205,8 +194,11 @@ function refreshDate(that) {
       that.setData({
         hasMore: hasMore,
         notes: res.data.map(function (e) {
-          e.showCreateTime = getLocalTime(e.c_date)
+          e.showCreateTime = e.c_date.Format("yyyy年MM月dd日 hh点mm分")
+          e.showStartTime = e.start_date.Format("yyyy年MM月dd日 hh点mm分")
+          e.showEndTime = e.end_date.Format("yyyy年MM月dd日 hh点mm分")
           e.statusClass = getStatusClass(e.status)
+          e.statusString = getStatusString(e.status)
           return e
         })
       })
@@ -225,10 +217,11 @@ function loadMore(that) {
   });
   const db = wx.cloud.database()
   console.log(curCount, new Date())
-  db.collection('note')
+  db.collection('leave')
     .where({
       _openid: app.globalData.openID, // 填入当前用户 openid
-      status: 3
+      status: 3,
+      type: 1
     })
     .limit(20) // 限制返回数量为 20 条
     .skip(curCount)
@@ -237,13 +230,11 @@ function loadMore(that) {
       console.log("数据回来了", res.data, new Date())
       let hasMore = res.data.length >= 20
       let moreNotes = res.data.map(function (e) {
-        if (e.a_date) {
-          e.showAlertTime = getLocalTime(e.a_date)
-        } else {
-          e.showAlertTime = ""
-        }
-        e.showCreateTime = getLocalTime(e.c_date)
+        e.showCreateTime = e.c_date.Format("yyyy年MM月dd日 hh点mm分")
+        e.showStartTime = e.start_date.Format("yyyy年MM月dd日 hh点mm分")
+        e.showEndTime = e.end_date.Format("yyyy年MM月dd日 hh点mm分")
         e.statusClass = getStatusClass(e.status)
+        e.statusString = getStatusString(e.status)
         return e
       })
       let notes = that.data.notes.concat(moreNotes)

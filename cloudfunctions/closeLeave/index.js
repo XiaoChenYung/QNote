@@ -68,14 +68,14 @@ exports.main = async (event, context) => {
       return {
         code: 0,
         message: "销假成功",
-        data: body
+        data: note
       }
     }
   } catch (e) {
     return {
       code: -1,
       message: e.message,
-      data: note
+      data: null
     }
   }
 }

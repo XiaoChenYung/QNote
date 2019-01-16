@@ -149,17 +149,10 @@ function closeNote(that, _id) {
     success: res => {
       console.log(res)
       if (res.result.code == 0) {
-        Toast.clear()
-        wx.switchTab({
-          url: '../home/index',
-        })
+        Toast.success("已销假")
+        refreshDate(that)
       } else {
         Toast.fail(res.result.message)
-        setTimeout(function () {
-          wx.switchTab({
-            url: '../home/index',
-          })
-        }, 1000)
       }
     },
     fail: err => {
@@ -217,7 +210,7 @@ function refreshDate(that) {
       that.setData({
         hasMore: hasMore,
         notes: res.data.map(function(e) {
-          e.showCreateTime = e.c_date.Format("MM月dd日 hh点mm分")
+          e.showCreateTime = e.c_date.Format("yyyy年MM月dd日 hh点mm分")
           e.showStartTime = e.start_date.Format("yyyy年MM月dd日 hh点mm分")
           e.showEndTime = e.end_date.Format("yyyy年MM月dd日 hh点mm分")
           e.statusClass = getStatusClass(e.status)
@@ -253,7 +246,7 @@ function loadMore(that) {
     .then(res => {
       let hasMore = res.data.length >= 20
       let moreNotes = res.data.map(function(e) {
-        e.showCreateTime = e.c_date.Format("MM月dd日 hh点mm分")
+        e.showCreateTime = e.c_date.Format("yyyy年MM月dd日 hh点mm分")
         e.showStartTime = e.start_date.Format("yyyy年MM月dd日 hh点mm分")
         e.showEndTime = e.end_date.Format("yyyy年MM月dd日 hh点mm分")
         e.statusClass = getStatusClass(e.status)

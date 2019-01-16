@@ -1,17 +1,18 @@
 <!--index.wxml-->
 <block wx:key="{{index}}" wx:for="{{notes}}">
-  <van-panel custom-class="panel" header-class="{{item.statusClass}}" title="{{item.title}}" desc="创建时间：{{item.showCreateTime}}" status="已关闭" use-footer-slot footer-class="fotter">
+  <van-panel custom-class="panel" header-class="{{item.statusClass}}" title="{{item.title}}" desc="{{item.detail}}" status="{{item.statusString}}" use-footer-slot footer-class="fotter">
     <view class='info'>
-      <view class='detail'>{{item.detail}}</view>
-      <view class='address tip' wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
-      <view class='weather tip' wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
-      <view class='friends' wx:if="{{item.friends.length > 0}}">
+      <view class='tip'>开始时间：{{item.showStartTime}}</view>
+      <view class='tip'>结束时间：{{item.showEndTime}}</view>
+      <view class='tip' wx:if="{{item.address.length > 0}}">位置：{{item.address}}</view>
+      <view class='tip' wx:if="{{item.weather.length > 0}}">天气：{{item.weather}}</view>
+      <!-- <view class='friends' wx:if="{{item.friends.length > 0}}">
         <image wx:key="{{idx}}" wx:for-index="idx" wx:for-item="fItem" wx:for="{{item.friends}}" src="{{fItem.avatarUrl}}"></image>
-      </view>
+      </view> -->
     </view>
     <view class='footer' slot="footer">
-      <label wx:if="{{item.showAlertTime.length > 0}}">提醒时间：{{item.showAlertTime}}</label>
-      <van-button data-item='{{item}}' class='last' bindtap='deleteItem' size="small" type="danger">删除</van-button>
+      <label>创建时间：{{item.showCreateTime}}</label>
+      <van-button data-item='{{item}}' class='first' bindtap='deleteItem' size="small" type="danger">删除</van-button>
     </view>
   </van-panel>
 </block>

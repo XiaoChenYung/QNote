@@ -123,39 +123,48 @@ Page({
   }
 })
 
-function getLocalTime(date) {
-  return date.toLocaleString().replace(/:\d{1,2}$/, ' ');
-}
-
 function getStatusClass(status) {
   switch (status) {
     case 1:
+      return "header-wait"
+    case 2:
       return "header-ing"
-    case 9:
+    case 3:
       return "header-done"
     default:
       return "header-done"
   }
 }
 
+function getStatusString(status) {
+  switch (status) {
+    case 1:
+      return "待批准"
+    case 2:
+      return "进行中"
+    case 3:
+      return "已销假"
+    case 9:
+      return "已删除"
+    default:
+      return "未知状态"
+  }
+}
+
 function closeNote(that, _id) {
-  Toast.loading({
-    mask: false,
-    message: '正在关闭...'
-  });
-  const db = wx.cloud.database()
-  db.collection('note').doc(_id).update({
-    // data 传入需要局部更新的数据
+  wx.cloud.callFunction({
+    name: 'deleteLeave',
     data: {
-      status: 3
+      lID: _id
+    },
+    success: res => {
+      refreshDate(that)
+    },
+    fail: err => {
+      console.error('[云函数] [login] 调用失败', err)
+      Toast.fail(err)
     }
   })
-    .then(res => {
-      refreshDate(that)
-    })
-    .catch(err => {
-      Toast.fail(err.message)
-    })
 }
 
 function addCreater(that, creater, nID) {
@@ -188,11 +197,12 @@ function refreshDate(that) {
     message: '获取数据...'
   });
   const db = wx.cloud.database()
-  db.collection('note')
+  const _ = db.command
+  db.collection('leave')
     .where({
       approver_open_id: app.globalData.openID, // 填入当前用户 openid
-      status: 2,
-      
+      status: _.eq(3).or(_.eq(2)),
+      type: 2
     })
     .limit(20) // 限制返回数量为 20 条
     .get()
@@ -205,13 +215,11 @@ function refreshDate(that) {
       that.setData({
         hasMore: hasMore,
         notes: res.data.map(function (e) {
-          if (e.a_date) {
-            e.showAlertTime = getLocalTime(e.a_date)
-          } else {
-            e.showAlertTime = ""
-          }
-          e.showCreateTime = getLocalTime(e.c_date)
+          e.showCreateTime = e.c_date.Format("yyyy年MM月dd日 hh点mm分")
+          e.showStartTime = e.start_date.Format("yyyy年MM月dd日 hh点mm分")
+          e.showEndTime = e.end_date.Format("yyyy年MM月dd日 hh点mm分")
           e.statusClass = getStatusClass(e.status)
+          e.statusString = getStatusString(e.status)
           return e
         })
       })
@@ -229,11 +237,13 @@ function loadMore(that) {
     message: '获取数据...'
   });
   const db = wx.cloud.database()
+  const _ = db.command
   console.log(curCount, new Date())
-  db.collection('note')
+  db.collection('leave')
     .where({
-      _openid: app.globalData.openID, // 填入当前用户 openid
-      status: 2
+      approver_open_id: app.globalData.openID, // 填入当前用户 openid
+      status: _.eq(3).or(_.eq(2)),
+      type: 2
     })
     .limit(20) // 限制返回数量为 20 条
     .skip(curCount)
@@ -242,13 +252,11 @@ function loadMore(that) {
       console.log("数据回来了", res.data, new Date())
       let hasMore = res.data.length >= 20
       let moreNotes = res.data.map(function (e) {
-        if (e.a_date) {
-          e.showAlertTime = getLocalTime(e.a_date)
-        } else {
-          e.showAlertTime = ""
-        }
-        e.showCreateTime = getLocalTime(e.c_date)
+        e.showCreateTime = e.c_date.Format("yyyy年MM月dd日 hh点mm分")
+        e.showStartTime = e.start_date.Format("yyyy年MM月dd日 hh点mm分")
+        e.showEndTime = e.end_date.Format("yyyy年MM月dd日 hh点mm分")
         e.statusClass = getStatusClass(e.status)
+        e.statusString = getStatusString(e.status)
         return e
       })
       let notes = that.data.notes.concat(moreNotes)
@@ -263,4 +271,26 @@ function loadMore(that) {
       console.log(err.message)
       Toast.fail(err.message)
     })
+}
+
+// 对Date的扩展，将 Date 转化为指定格式的String
+// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
+// 例子： 
+// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+Date.prototype.Format = function (fmt) { //author: meizz 
+  var o = {
+    "M+": this.getMonth() + 1, //月份 
+    "d+": this.getDate(), //日 
+    "h+": this.getHours(), //小时 
+    "m+": this.getMinutes(), //分 
+    "s+": this.getSeconds(), //秒 
+    "q+": Math.floor((this.getMonth() + 3) / 3),
+    "S": this.getMilliseconds() //毫秒 
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
 }
