@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "已提醒的便签",
+  "navigationBarTitleText": "已批准",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "van-button": "../../miniprogram_npm/vant-weapp/button/index",

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "已关闭的便签",
+  "navigationBarTitleText": "已销假",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "van-button": "../../miniprogram_npm/vant-weapp/button/index",

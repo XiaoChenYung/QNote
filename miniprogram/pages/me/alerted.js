@@ -190,8 +190,9 @@ function refreshDate(that) {
   const db = wx.cloud.database()
   db.collection('note')
     .where({
-      _openid: app.globalData.openID, // 填入当前用户 openid
-      status: 2
+      approver_open_id: app.globalData.openID, // 填入当前用户 openid
+      status: 2,
+      
     })
     .limit(20) // 限制返回数量为 20 条
     .get()

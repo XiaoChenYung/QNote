@@ -139,21 +139,34 @@ function getStatusString(status) {
 function closeNote(that, _id) {
   Toast.loading({
     mask: false,
-    message: '正在关闭...'
+    message: '正在销假...'
   });
-  const db = wx.cloud.database()
-  db.collection('note').doc(_id).update({
-      // data 传入需要局部更新的数据
-      data: {
-        status: 3
+  wx.cloud.callFunction({
+    name: 'closeLeave',
+    data: {
+      lID: _id
+    },
+    success: res => {
+      console.log(res)
+      if (res.result.code == 0) {
+        Toast.clear()
+        wx.switchTab({
+          url: '../home/index',
+        })
+      } else {
+        Toast.fail(res.result.message)
+        setTimeout(function () {
+          wx.switchTab({
+            url: '../home/index',
+          })
+        }, 1000)
       }
-    })
-    .then(res => {
-      refreshDate(that)
-    })
-    .catch(err => {
+    },
+    fail: err => {
+      console.error('[云函数] [login] 调用失败', err)
       Toast.fail(err.message)
-    })
+    }
+  })
 }
 
 function addCreater(that, creater, nID) {

@@ -5,8 +5,8 @@
 <view class='name'>企鹅请假单 1.0.0</view>
 <view>
   <van-cell-group>
-    <!-- <van-cell title="已关闭" is-link url="../me/closed"/>
-    <van-cell title="已提醒" is-link url="../me/alerted"/> -->
+    <van-cell title="已批准" is-link url="../me/alerted"/>
+    <van-cell title="已销假" is-link url="../me/closed"/>
     <!-- <van-cell title="设置" is-link url="../me/setting"/> -->
     <van-cell title="关于作者" is-link url="../me/about"/>
   </van-cell-group>

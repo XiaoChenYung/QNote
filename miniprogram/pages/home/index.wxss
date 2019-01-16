@@ -50,6 +50,9 @@ page {
 .footer .last {
   margin-left: 10px;
 }
+.close {
+  margin-left: auto;
+}
 .footer label {
   font-size: 11px;
   color: #999999;

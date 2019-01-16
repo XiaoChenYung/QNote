@@ -11,75 +11,71 @@ const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  const {user, nID, formID} = event
+  const { lID } = event
   try {
-    await db.collection('leave').doc(nID).update({
+    await db.collection('leave').doc(lID).update({
       // data 传入需要局部更新的数据
       data: {
-        approver: user,
-        status: 2
+        status: 3
       }
     })
-    let noteData = await db.collection('leave').doc(nID).get()
-    let note = noteData.data
-    let openID = wxContext.OPENID
-    note.approver_open_id = openID
-    let oriFormID = note.form_id
-    note.form_id = formID
-    note.type = 2
-    note.ori_id = note._id
-    delete note._id
-    let newNID = await db.collection('leave').add({
-      data: note
+    await db.collection('leave').where({
+      ori_id: lID
     })
-    let accessData = await db.collection('access_token').doc("XC9q83kPDdDCJ3FB").get()
-    let access_token = accessData.data.access_token
-    let url =  "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + access_token
-    let body = {
-      "access_token": access_token,
-      "touser": note._openid,
-      "template_id": "kjIjo1Eb3mPerBBsIDExwRNq2nWt4fbrHvYKTN0DBjU",
-      "page": "/pages/home/index",
-      "form_id": oriFormID,
-      "data": {
-        "keyword1": {
-          "value": note.title
+      .update({
+        data: {
+          status: 3
         },
-        "keyword2": {
-          "value": "通过"
-        },
-        "keyword3": {
-          "value": note.detail
-        },
-        "keyword4": {
-          "value": note.c_date.Format("yyyy年MM月dd日 hh时mm分")
-        },
-        "keyword5": {
-          "value": note.creater.nickName
-        },
-        "keyword6": {
-          "value": note.start_date.Format("yyyy年MM月dd日 hh时mm分")
-        },
-        "keyword7": {
-          "value": note.end_date.Format("yyyy年MM月dd日 hh时mm分")
-        },
-        "keyword8": {
-          "value": user.nickName
+      })
+    let noteData = await db.collection('leave').where({
+      ori_id: lID
+    }).get()
+    if (noteData.data.length == 0) {
+      return {
+        code: -1,
+        message: "记录不存在",
+        data: null
+      }
+    } else {
+      let note = noteData.data[0]
+      let openID = wxContext.OPENID
+      let accessData = await db.collection('access_token').doc("XC9q83kPDdDCJ3FB").get()
+      let access_token = accessData.data.access_token
+      let url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + access_token
+      let curDate = new Date()
+      let body = {
+        "access_token": access_token,
+        "touser": note.approver_open_id,
+        "template_id": "2fbCd14xpFc0MmFz4dCTjoH8T5-32JXvNAqjiPn4emg",
+        "page": "/pages/home/index",
+        "form_id": note.form_id,
+        "data": {
+          "keyword1": {
+            "value": note.creater.nickName
+          },
+          "keyword2": {
+            "value": note.c_date.Format("yyyy年MM月dd日 hh时mm分")
+          },
+          "keyword3": {
+            "value": curDate.Format("yyyy年MM月dd日 hh时mm分")
+          },
+          "keyword4": {
+            "value": "已销假"
+          }
         }
-      },
-      "emphasis_keyword": "keyword1.DATA"
-    }
-    await httprequest(url, JSON.stringify(body))
-    return {
-      code: 0,
-      message: "加入成功",
-      data: note
+      }
+      await httprequest(url, JSON.stringify(body))
+      return {
+        code: 0,
+        message: "销假成功",
+        data: body
+      }
     }
   } catch (e) {
     return {
       code: -1,
       message: e.message,
-      data: null
+      data: note
     }
   }
 }
